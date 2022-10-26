@@ -23,7 +23,7 @@ eval "$(ssh-agent -s)"
 exec ssh-agent zsh
 
 # Add th SSH key
-ssh-add -K ~/.ssh/id_ed25519_github
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519_github
 ```
 
 Note: replace `id_ed25519_github` with the name of your own SSH key.
@@ -33,20 +33,24 @@ Note: replace `id_ed25519_github` with the name of your own SSH key.
 If you dont already have the `config` file inside your `/.ssh` folder, create one:
 
 ```bash
-# Create
+
+# Modify your ~/.ssh/config 
+open ~/.ssh/config
+
+# If the file doesn't exist, create the file 
 touch ~/.ssh/config
 
-# Paste the followint
-Host *
+# Paste the following content
+Host *.github.com
   AddKeysToAgent yes
   UseKeychain yes
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_ed25519_github
 ```
 
 ### 3. Add the SSH key to Github
 
 ```bash
-pbcopy < ~/.ssh/id_ed25519.pub
+pbcopy < ~/.ssh/id_ed25519_github.pub
 ```
 
 More info: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh
